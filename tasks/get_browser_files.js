@@ -27,7 +27,8 @@ module.exports = function(grunt) {
     });
 
     browserFiles.get(options, function(err, files){
-      grunt.config("get_browser_files.files", files);
+      grunt.config("get_browser_files.bower", files.bower);
+      grunt.config("get_browser_files.app", files.app);
       done();
     });
   });

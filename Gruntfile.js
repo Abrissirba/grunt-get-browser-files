@@ -63,6 +63,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint', 'test']);
 
   grunt.registerTask('checkResult', function(){
-    console.log(grunt.config('get_browser_files.files'));
+    console.log(grunt.config('get_browser_files.bower'));
+    console.log(grunt.config('get_browser_files.app'));
   });
 };
