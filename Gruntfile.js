@@ -39,9 +39,6 @@ module.exports = function(grunt) {
           },
           glob: {
             directories: ["test/files/app", "test/files/_base"]
-          },
-          config:{
-            file: "test/files/config.json"
           }
         }
       }

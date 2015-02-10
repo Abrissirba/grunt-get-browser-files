@@ -45,7 +45,9 @@ function getFileMethodFunctions(opts){
         }
     };
 
-    return methods.map(function(method){
+    return methods.filter(function(method){
+        return opts[method];
+    }).map(function(method){
         return getMethodFunction(opts, getFileMethods)(method);
     });
 };
