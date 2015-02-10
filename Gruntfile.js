@@ -31,11 +31,18 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     get_browser_files: {
       default_options: {
-        options: {
-          bowerDirectory: "./test/files/bower_components",
-          bowerFile: "./test/files/bower.json",
-          bowerExclude: ['angular-bootstrap'],
-          appDirectories: ["test/files/app", "test/files/_base"]
+        options:{
+          bower:{
+            directory: "./test/files/bower_components",
+            file: "./test/files/bower.json",
+            exclude: ['angular-bootstrap']
+          },
+          glob: {
+            directories: ["test/files/app", "test/files/_base"]
+          },
+          config:{
+            file: "test/files/config.json"
+          }
         }
       }
     },

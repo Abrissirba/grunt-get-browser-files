@@ -20,6 +20,7 @@
       "url": "https://github.com/Abrissirba/grunt-get-browser-files/blob/master/LICENSE-MIT"
     }
   ],
+  "main": "tasks/lib/browserFiles.js",
   "engines": {
     "node": ">= 0.8.0"
   },
@@ -42,6 +43,7 @@
     "async": "^0.9.0",
     "globby": "^1.1.0",
     "grunt": "^0.4.5",
+    "strip-bom": "^1.0.0",
     "wiredep": "^2.2.2"
   }
 }

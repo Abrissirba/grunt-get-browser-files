@@ -18,17 +18,13 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('get_browser_files', 'A grunt task that will return bower files in correct order and all files in any other directory', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var done = this.async();
-
-    var options = this.options({
-        bowerDirectory: "./bower_components",
-        bowerFile: "./bower.json",
-        bowerExclude: [],
-        appDirectories: []
-    });
+    var options = this.options({});
 
     browserFiles.get(options, function(err, files){
-      grunt.config("get_browser_files.bower", files.bower);
-      grunt.config("get_browser_files.app", files.app);
+      grunt.config("get_browser_files.bower.js", files.bower.js);
+      grunt.config("get_browser_files.bower.css", files.bower.css);
+      grunt.config("get_browser_files.app.js", files.app.js);
+      grunt.config("get_browser_files.app.css", files.app.css);
       done();
     });
   });

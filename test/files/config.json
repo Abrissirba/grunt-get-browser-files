@@ -1,0 +1,34 @@
+{
+	"bower":{
+		"js" :[
+			"test/files/bower_components/angular/angular.js",
+			"test/files/bower_components/angular/ui-bootstrap-tpls.js",
+			"test/files/bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js",
+			"test/files/bower_components/angular-gettext/angular-gettext.js",
+			"test/files/bower_components/angular-local-storage/dist/angular-local-storage.js",
+			"test/files/bower_components/angular-resource/angular-resource.js",
+			"test/files/bower_components/angular-ui-router/release/angular-ui-router.js",
+			"test/files/bower_components/jquery/jquery.js",
+			"test/files/bower_components/underscore/underscore.js"
+		],
+		"css": [
+
+		]
+	},
+	"app":{
+		"js":[ 
+			"test/files/app/_app.js",
+			"test/files/app/a.js",
+			"test/files/app/file.js",
+			"test/files/app/nav/_nav.js",
+			"test/files/app/nav/partial/partial.js",
+			"test/files/_base/_base.js",
+			"test/files/_base/c.js",
+			"test/files/_base/g.js",
+			"test/files/_base/test.js",
+			"test/files/_base/b/p.js" 
+		],
+		"css":[
+		]
+	}
+}
