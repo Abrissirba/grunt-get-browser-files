@@ -6,7 +6,6 @@ var wiredep = require('wiredep');
 var stripBom = require('strip-bom');
 
 exports.get = function(opts, callback){
-    console.log(opts);
     async.parallel(getFileMethodFunctions(opts), function(err, result){
         if(err){
             callback(err, null);
@@ -31,14 +30,33 @@ exports.get = function(opts, callback){
                     }
                 }
             });
-
+            console.log(sourceFiles)
             callback(null, sourceFiles);
         }
     });
 };
 
+function excludeFiles(exclude, files){
+    if(exclude){
+        return files.filter(function(file){
+            return exclude.filter(function(excludeFile){
+                return file.indexOf(excludeFile) > -1;
+            }).length === 0;
+        });
+    }
+    else{
+        return files;
+    }
+};
+
+function parseSlashes(files){
+    return files.map(function(file){
+        return file.replace(/\\/g, '/');
+    });
+};
+
 function getFileMethodFunctions(opts){
-    var methods = ["bower", "config", "glob" ];
+    var methods = ["wiredep", "config", "glob", "files" ];
     function getMethodFunction(opts, getFileMethods){
         return function(method){
             return getFileMethods[method].bind(null, opts[method]);
@@ -54,7 +72,7 @@ function getFileMethodFunctions(opts){
 
 var getFileMethods = {
 
-    bower: function(opts, callback){
+    wiredep: function(opts, callback){
         function getRelativePath(file){
             return path.relative(process.cwd(), file);
         };
@@ -68,8 +86,8 @@ var getFileMethods = {
 
         callback(null, {
             bower: {
-                js: bowerSourceFiles.js && !opts.excludeJs ? bowerSourceFiles.js.map(getRelativePath) : [],
-                css: bowerSourceFiles.css && !opts.excludeCss ? bowerSourceFiles.css.map(getRelativePath) : []
+                js: bowerSourceFiles.js ? parseSlashes(excludeFiles(opts.exclude, bowerSourceFiles.js.map(getRelativePath))) : [],
+                css: bowerSourceFiles.css ? parseSlashes(excludeFiles(opts.exclude,bowerSourceFiles.css.map(getRelativePath))) : []
             }
         });
     },
@@ -123,8 +141,8 @@ var getFileMethods = {
                     }
                 };
                 result.forEach(function(files){
-                    appSourceFiles.app.js = appSourceFiles.app.js.concat(files.filter(filterJs));
-                    appSourceFiles.app.css = appSourceFiles.app.css.concat(files.filter(filterCss));
+                    appSourceFiles.app.js = parseSlashes(excludeFiles(opts.exclude, appSourceFiles.app.js.concat(files.filter(filterJs))));
+                    appSourceFiles.app.css = parseSlashes(excludeFiles(opts.exclude, appSourceFiles.app.css.concat(files.filter(filterCss))));
                 });
 
                 callback(null, appSourceFiles);
@@ -140,13 +158,22 @@ var getFileMethods = {
             else{
                 var files = JSON.parse(stripBom(data));
                 var sourceFiles = createFilesObject();
-                sourceFiles.bower.js = files.bower && files.bower.js && !opts.excludeJs ? files.bower.js : [];
-                sourceFiles.bower.css = files.bower && files.bower.css && !opts.excludeCss ? files.bower.css : [];
-                sourceFiles.app.js = files.app && files.app.js && !opts.excludeJs ? files.app.js : [];
-                sourceFiles.app.css = files.app && files.app.css && !opts.excludeCss ? files.app.css : [];
+                sourceFiles.bower.js = files.bower && files.bower.js ? parseSlashes(excludeFiles(opts.exclude, files.bower.js)) : [];
+                sourceFiles.bower.css = files.bower && files.bower.css ? parseSlashes(excludeFiles(opts.exclude,files.bower.css)) : [];
+                sourceFiles.app.js = files.app && files.app.js ? parseSlashes(excludeFiles(opts.exclude,files.app.js)) : [];
+                sourceFiles.app.css = files.app && files.app.css ? parseSlashes(excludeFiles(opts.exclude,files.app.css)) : [];
                 callback(null, sourceFiles);
             }
         });
+    },
+
+    files: function(opts, callback){
+        var sourceFiles = createFilesObject();
+        sourceFiles.bower.js = opts.bower && opts.bower.js ? parseSlashes(excludeFiles(opts.exclude, opts.bower.js)) : [];
+        sourceFiles.bower.css = opts.bower && opts.bower.css ? parseSlashes(excludeFiles(opts.exclude, opts.bower.css)) : [];
+        sourceFiles.app.js = opts.app && opts.bower.js ? parseSlashes(excludeFiles(opts.exclude, opts.app.js)) : [];
+        sourceFiles.app.css = opts.app && opts.bower.css ? parseSlashes(excludeFiles(opts.exclude, opts.app.css)) : [];
+        callback(null, sourceFiles);
     }
 };
 
