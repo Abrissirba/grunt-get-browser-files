@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         bump: {
-            
+            pushTo: 'origin'
         },
         jshint: {
             all: [
