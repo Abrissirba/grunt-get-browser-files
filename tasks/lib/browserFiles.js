@@ -30,7 +30,6 @@ exports.get = function(opts, callback){
                     }
                 }
             });
-            console.log(sourceFiles)
             callback(null, sourceFiles);
         }
     });

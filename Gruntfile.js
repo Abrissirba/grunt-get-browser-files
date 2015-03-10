@@ -12,6 +12,9 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    bump: {
+        
+    },
     jshint: {
       all: [
         'Gruntfile.js',
