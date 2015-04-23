@@ -170,8 +170,8 @@ var getFileMethods = {
         var sourceFiles = createFilesObject();
         sourceFiles.bower.js = opts.bower && opts.bower.js ? parseSlashes(excludeFiles(opts.exclude, opts.bower.js)) : [];
         sourceFiles.bower.css = opts.bower && opts.bower.css ? parseSlashes(excludeFiles(opts.exclude, opts.bower.css)) : [];
-        sourceFiles.app.js = opts.app && opts.bower.js ? parseSlashes(excludeFiles(opts.exclude, opts.app.js)) : [];
-        sourceFiles.app.css = opts.app && opts.bower.css ? parseSlashes(excludeFiles(opts.exclude, opts.app.css)) : [];
+        sourceFiles.app.js = opts.app && opts.app.js ? parseSlashes(excludeFiles(opts.exclude, opts.app.js)) : [];
+        sourceFiles.app.css = opts.app && opts.app.css ? parseSlashes(excludeFiles(opts.exclude, opts.app.css)) : [];
         callback(null, sourceFiles);
     }
 };
